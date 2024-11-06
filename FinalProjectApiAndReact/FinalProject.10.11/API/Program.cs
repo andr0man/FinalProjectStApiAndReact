@@ -11,6 +11,8 @@ using DAL.Data.Initializer;
 using DAL.Models.Identity;
 using DAL.Repositories.CategoryRepository;
 using DAL.Repositories.RoleRepository;
+using DAL.Repositories.ToDoListRepository;
+using DAL.Repositories.ToDoRepository;
 using DAL.Repositories.UserRepository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -86,6 +88,8 @@ builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IToDoListRepository, ToDoListRepository>();
+builder.Services.AddScoped<IToDoRepository, ToDoRepository>();
 
 // Add automapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

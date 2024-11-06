@@ -1,12 +1,63 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DAL.Models.ToDos;
+using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace DAL.Repositories.ToDoRepository
 {
-    internal class ToDoRepository
+    public class ToDoRepository : IToDoRepository
     {
+        private readonly ApplicationDbContext _context;
+
+        public ToDoRepository(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        public async Task AddAsync(ToDo model)
+        {
+            await _context.ToDos.AddAsync(model);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(ToDo model)
+        {
+            _context.ToDos.Remove(model);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<ToDo?> GetAsync(Expression<Func<ToDo, bool>> predicate)
+        {
+            return await _context.ToDos
+                .Include(td => td.ToDoList)
+                .FirstOrDefaultAsync(predicate);
+        }
+
+        public async Task<ToDo?> GetByIdAsync(Guid id)
+        {
+            return await _context.ToDos
+                .Include(td => td.ToDoList)
+                .FirstOrDefaultAsync(td => td.Id == id);
+        }
+
+        public async Task<List<ToDo>> GetAllAsync()
+        {
+            return await _context.ToDos
+                .Include(td => td.ToDoList)
+                .ToListAsync();
+        }
+
+        public async Task<List<ToDo>> GetByToDoListIdAsync(Guid toDoListId)
+        {
+            return await _context.ToDos
+                .Where(td => td.ToDoListId == toDoListId)
+                .Include(td => td.ToDoList)
+                .ToListAsync();
+        }
+
+        public async Task UpdateAsync(ToDo model)
+        {
+            _context.ToDos.Update(model);
+            await _context.SaveChangesAsync();
+        }
     }
 }
