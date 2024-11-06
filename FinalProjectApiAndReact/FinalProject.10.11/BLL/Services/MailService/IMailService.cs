@@ -1,7 +1,7 @@
-﻿using Dashboard.DAL.Models.Identity;
+﻿using DAL.Models.Identity;
 using MimeKit;
 
-namespace Dashboard.BLL.Services.MailService
+namespace BLL.Services.MailService
 {
     public interface IMailService
     {

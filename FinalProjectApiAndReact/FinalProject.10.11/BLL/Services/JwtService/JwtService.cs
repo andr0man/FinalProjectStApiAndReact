@@ -1,9 +1,10 @@
-﻿using Dashboard.DAL;
-using Dashboard.DAL.Data;
-using Dashboard.DAL.Models;
-using Dashboard.DAL.Models.Identity;
-using Dashboard.DAL.Repositories.UserRepository;
-using Dashboard.DAL.ViewModels;
+﻿using BLL.Services;
+using DAL;
+using DAL.Data;
+using DAL.Models;
+using DAL.Models.Identity;
+using DAL.Repositories.UserRepository;
+using DAL.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -12,7 +13,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Dashboard.BLL.Services.JwtService
+namespace BLL.Services.JwtService
 {
     public class JwtService : IJwtService
     {
@@ -43,7 +44,7 @@ namespace Dashboard.BLL.Services.JwtService
             await _context.RefreshTokens.AddAsync(token);
             var result = await _context.SaveChangesAsync();
 
-            if(result == 0)
+            if (result == 0)
             {
                 return null;
             }
@@ -112,7 +113,7 @@ namespace Dashboard.BLL.Services.JwtService
 
             var saveResult = await SaveRefreshTokenAsync(user, refreshToken, accessToken.Id);
 
-            if(saveResult == null)
+            if (saveResult == null)
             {
                 return ServiceResponse.BadRequestResponse("Не вдалося зберегти refresh токен");
             }
@@ -131,12 +132,12 @@ namespace Dashboard.BLL.Services.JwtService
             var storedToken = await _context.RefreshTokens
                 .FirstOrDefaultAsync(t => t.Token == model.RefreshToken);
 
-            if(storedToken == null)
+            if (storedToken == null)
             {
                 throw new SecurityTokenException("Invalid token");
             }
 
-            if(storedToken.IsUsed)
+            if (storedToken.IsUsed)
             {
                 throw new SecurityTokenException("Invalid token");
             }
@@ -151,7 +152,7 @@ namespace Dashboard.BLL.Services.JwtService
             var accessTokenId = principals.Claims
                 .Single(c => c.Type == JwtRegisteredClaimNames.Jti).Value;
 
-            if(storedToken.JwtId != accessTokenId)
+            if (storedToken.JwtId != accessTokenId)
             {
                 throw new SecurityTokenException("Invalid access token");
             }
@@ -162,7 +163,7 @@ namespace Dashboard.BLL.Services.JwtService
 
             var user = await _userRepository.GetByIdAsync(storedToken.UserId, true);
 
-            if(user == null)
+            if (user == null)
             {
                 throw new SecurityTokenException("Invalid user id");
             }
@@ -191,7 +192,7 @@ namespace Dashboard.BLL.Services.JwtService
 
             var jwtSecurityToken = securityToken as JwtSecurityToken;
 
-            if(jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256))
+            if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256))
             {
                 throw new SecurityTokenException("Invalid access token");
             }

@@ -1,4 +1,4 @@
-﻿namespace Dashboard.DAL
+﻿namespace DAL
 {
     public class Settings
     {

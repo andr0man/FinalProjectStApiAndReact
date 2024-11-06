@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Net;
 
-namespace Dashboard.BLL.Services
+namespace BLL.Services
 {
     public class ServiceResponse
     {
@@ -40,11 +40,11 @@ namespace Dashboard.BLL.Services
         {
             if (result.Succeeded)
             {
-                return ServiceResponse.OkResponse(successMessage);
+                return OkResponse(successMessage);
             }
             else
             {
-                return ServiceResponse.BadRequestResponse(result.Errors.First().Description);
+                return BadRequestResponse(result.Errors.First().Description);
             }
         }
     }

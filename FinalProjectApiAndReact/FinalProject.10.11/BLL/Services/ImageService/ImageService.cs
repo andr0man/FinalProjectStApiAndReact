@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using BLL.Services;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 
-namespace Dashboard.BLL.Services.ImageService
+namespace BLL.Services.ImageService
 {
     public class ImageService : IImageService
     {
@@ -19,7 +20,7 @@ namespace Dashboard.BLL.Services.ImageService
             var validBase64 = parts[1];
             var types = parts[0].Split(';')[0].Split(':')[1].Split('/');
 
-            if(types[0] != "image")
+            if (types[0] != "image")
             {
                 return ServiceResponse.BadRequestResponse("Файл не є картинкою");
             }
@@ -47,17 +48,17 @@ namespace Dashboard.BLL.Services.ImageService
             var imageName = $"{Guid.NewGuid()}.{types[1]}";
             var filePath = Path.Combine(root, path, imageName);
 
-            if(!string.IsNullOrEmpty(oldImage))
+            if (!string.IsNullOrEmpty(oldImage))
             {
                 var filePathOld = Path.Combine(root, path, oldImage);
 
                 File.Delete(filePathOld);
             }
-            
+
 
             using (var stream = File.OpenWrite(filePath))
             {
-                using(var imageStream = image.OpenReadStream())
+                using (var imageStream = image.OpenReadStream())
                 {
                     await imageStream.CopyToAsync(stream);
                 }

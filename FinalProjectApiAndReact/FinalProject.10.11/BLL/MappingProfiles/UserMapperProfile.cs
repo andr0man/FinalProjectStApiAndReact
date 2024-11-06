@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
-using Dashboard.DAL;
-using Dashboard.DAL.Models.Identity;
-using Dashboard.DAL.ViewModels.User;
+using DAL.Models.Identity;
+using DAL.ViewModels.User;
+using DAL;
 
-namespace Dashboard.BLL.MappingProfiles
+namespace BLL.MappingProfiles
 {
     public class UserMapperProfile : Profile
     {
-        public UserMapperProfile() 
+        public UserMapperProfile()
         {
             // User -> UserVM
             CreateMap<User, UserVM>()

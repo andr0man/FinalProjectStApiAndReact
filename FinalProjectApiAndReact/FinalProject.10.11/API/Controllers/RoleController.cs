@@ -1,13 +1,13 @@
-﻿using Dashboard.BLL.Services;
-using Dashboard.BLL.Services.RoleService;
-using Dashboard.DAL;
-using Dashboard.DAL.Models.Identity;
-using Dashboard.DAL.ViewModels;
+﻿using BLL.Services;
+using BLL.Services.RoleService;
+using DAL.ViewModels.Role;
+using DAL;
+using DAL.Models.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Dashboard.API.Controllers
+namespace API.Controllers
 {
     [ApiController]
     //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]

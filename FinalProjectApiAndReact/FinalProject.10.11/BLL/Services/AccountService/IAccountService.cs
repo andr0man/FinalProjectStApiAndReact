@@ -1,6 +1,6 @@
-﻿using Dashboard.DAL.ViewModels.Auth;
+﻿using DAL.ViewModels.Auth;
 
-namespace Dashboard.BLL.Services.AccountService
+namespace BLL.Services.AccountService
 {
     public interface IAccountService
     {

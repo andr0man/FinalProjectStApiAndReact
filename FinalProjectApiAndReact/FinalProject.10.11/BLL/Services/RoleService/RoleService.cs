@@ -1,9 +1,10 @@
-﻿  using AutoMapper;
-using Dashboard.DAL.Models.Identity;
-using Dashboard.DAL.Repositories.RoleRepository;
-using Dashboard.DAL.ViewModels;
+﻿using AutoMapper;
+using BLL.Services;
+using DAL.Models.Identity;
+using DAL.Repositories.RoleRepository;
+using DAL.ViewModels.Role;
 
-namespace Dashboard.BLL.Services.RoleService
+namespace BLL.Services.RoleService
 {
     public class RoleService : IRoleService
     {
@@ -53,7 +54,7 @@ namespace Dashboard.BLL.Services.RoleService
         {
             var role = await _roleRepository.GetByIdAsync(id);
 
-            if(role == null)
+            if (role == null)
             {
                 return ServiceResponse.BadRequestResponse($"Роль з id {id} не знайдено");
             }
@@ -65,7 +66,7 @@ namespace Dashboard.BLL.Services.RoleService
 
         public async Task<ServiceResponse> CreteAsync(RoleVM model)
         {
-            if(!await _roleRepository.IsUniqueNameAsync(model.Name))
+            if (!await _roleRepository.IsUniqueNameAsync(model.Name))
             {
                 return ServiceResponse.BadRequestResponse($"Роль з іменем {model.Name} вже існує");
             }
@@ -91,7 +92,7 @@ namespace Dashboard.BLL.Services.RoleService
 
             var role = await _roleRepository.GetByIdAsync(model.Id);
 
-            if(role == null)
+            if (role == null)
             {
                 return ServiceResponse.BadRequestResponse($"Роль з id {model.Id} не знайдено");
             }

@@ -1,9 +1,9 @@
-﻿using Dashboard.BLL.Services;
+﻿using BLL.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 using System.Text.Json;
 
-namespace Dashboard.BLL.Middlewares
+namespace BLL.Middlewares
 {
     public class MiddlewareSecurityTokenExceptionHandling
     {

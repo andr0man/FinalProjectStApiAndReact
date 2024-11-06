@@ -1,4 +1,4 @@
-﻿namespace Dashboard.DAL.ViewModels.User
+﻿namespace DAL.ViewModels.User
 {
     public class UserVM
     {

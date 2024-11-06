@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
-using Dashboard.BLL.Services.ImageService;
-using Dashboard.DAL;
-using Dashboard.DAL.Models.Identity;
-using Dashboard.DAL.Repositories.UserRepository;
-using Dashboard.DAL.ViewModels.User;
+using BLL.Services;
+using BLL.Services.ImageService;
+using DAL;
+using DAL.Models.Identity;
+using DAL.Repositories.UserRepository;
+using DAL.ViewModels.User;
 
-namespace Dashboard.BLL.Services.UserService
+namespace BLL.Services.UserService
 {
     public class UserService : IUserService
     {

@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using Dashboard.DAL.Models.Identity;
-using Dashboard.DAL.ViewModels;
+using DAL.Models.Identity;
+using DAL.ViewModels.Role;
 
-namespace Dashboard.BLL.MappingProfiles
+namespace BLL.MappingProfiles
 {
     public class RoleMapperProfile : Profile
     {
-        public RoleMapperProfile() 
+        public RoleMapperProfile()
         {
             // Role -> RoleVM
             CreateMap<Role, RoleVM>();

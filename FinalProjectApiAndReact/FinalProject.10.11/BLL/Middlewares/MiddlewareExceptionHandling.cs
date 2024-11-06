@@ -1,8 +1,8 @@
-﻿using Dashboard.BLL.Services;
+﻿using BLL.Services;
 using Microsoft.AspNetCore.Http;
 using System.Text.Json;
 
-namespace Dashboard.BLL.Middlewares
+namespace BLL.Middlewares
 {
     public class MiddlewareExceptionHandling
     {

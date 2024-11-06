@@ -12,28 +12,19 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Copyright from "../../../components/copyright";
-import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import { useSelector } from "react-redux";
-import { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useAction } from "../../../hooks/useAction";
 import { toast } from "react-toastify";
 
 const Login = () => {
-    const [token, setToken] = useState();
     const navigate = useNavigate();
     const { isAuth } = useSelector((state) => state.auth);
     const { signIn } = useAction();
 
     const clientId =
         "1071227799664-848r4gmtminclfnnoiikek893m974t90.apps.googleusercontent.com";
-
-    // useEffect(() => {
-    //     if (isAuth) {
-    //         navigate("/");
-    //     }
-    // }, [isAuth])
 
     const handleSubmit = async (values) => {             
         const response = await signIn(values);
@@ -44,13 +35,6 @@ const Login = () => {
             navigate("/");
         }
     };
-
-    // const auth = (credentialResponse) => {
-    //     const token = credentialResponse.credential;
-
-    //     authUser(token);
-    //     navigate("/");
-    // };
 
     const validateYupSchema = Yup.object({
         email: Yup.string()
@@ -172,16 +156,6 @@ const Login = () => {
                         </Grid>
                     </Box>
                 </Box>
-                <GoogleOAuthProvider clientId={clientId}>
-                    <GoogleLogin
-                        onSuccess={(credentialResponse) => {
-                            // auth(credentialResponse);
-                        }}
-                        onError={() => {
-                            console.log("Login Failed");
-                        }}
-                    />
-                </GoogleOAuthProvider>
                 <Copyright sx={{ mt: 8, mb: 4 }} />
             </Container>
         </>

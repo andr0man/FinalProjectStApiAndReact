@@ -14,11 +14,12 @@ import Container from '@mui/material/Container';
 import Copyright from '../../../components/copyright'
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useAction } from "../../../hooks/useAction";
+import { toast } from "react-toastify";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 const Register = () => {
-
     const validateYupSchema = Yup.object({
         firstName: Yup.string()
             .required("Обов'язкове поле")
@@ -32,22 +33,39 @@ const Register = () => {
         password: Yup.string()
             .min(8, "Повинно бути 8 і більше символів")
             .required("Обов'язкове поле")
+            .required("Обов'язкове поле"),
+        confirmPassword: Yup.string()
+            .min(8, "Повинно бути 8 і більше символів")
+            .required("Обов'язкове поле"),
+        userName: Yup.string()
+            .required("Обов'язкове поле")
     });
 
     const navigate = useNavigate();
     const { isAuth } = useSelector((state) => state.user);
+    const { signUp } = useAction();
+
+    const handleSubmit = async (values) => {             
+        const response = await signUp(values);
+        if(!response.success) {
+            toast.error(response.message);
+        } else {
+            toast.success(response.message);
+            navigate("/");
+        }
+    };
 
     const formik = useFormik({
         initialValues: {
             firstName: '',
             lastName: '',
+            userName: '',
             email: '',
-            password: ''
+            password: '',
+            confirmPassword: ''
         },
         validationSchema: validateYupSchema,
-        onSubmit: values => {
-            console.log(values);
-        }
+        onSubmit: handleSubmit
     });
 
     useEffect(() => {
@@ -74,6 +92,27 @@ const Register = () => {
                 </Typography>
                 <Box component="form" noValidate onSubmit={formik.handleSubmit} sx={{ mt: 3 }}>
                     <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                            <TextField
+                                autoComplete="given-name"
+                                name="userName"
+                                required
+                                fullWidth
+                                id="userName"
+                                label="User Name"
+                                autoFocus
+                                onChange={formik.handleChange}
+                                value={formik.values.userName}
+                                onBlur={formik.handleBlur}
+                            />
+                            {formik.touched.userName && formik.errors.userName ?
+                                <Box sx={{ px: 1 }}>
+                                    <FormLabel fontSize="inherit" sx={{ fontSize: "12px", color: "red" }}>
+                                        {formik.errors.userName}
+                                    </FormLabel>
+                                </Box>
+                                : null}
+                        </Grid>
                         <Grid item xs={12} sm={6}>
                             <TextField
                                 autoComplete="given-name"
@@ -152,6 +191,27 @@ const Register = () => {
                                 <Box sx={{ px: 1 }}>
                                     <FormLabel fontSize="inherit" sx={{ fontSize: "12px", color: "red"}}>
                                         {formik.errors.password}
+                                    </FormLabel>
+                                </Box>
+                                : null}
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                required
+                                fullWidth
+                                name="confirmPassword"
+                                label="Confirm Password"
+                                type="password"
+                                id="password"
+                                autoComplete="new-password"
+                                onChange={formik.handleChange}
+                                value={formik.values.confirmPassword}
+                                onBlur={formik.handleBlur}
+                            />
+                            {formik.touched.confirmPassword && formik.errors.confirmPassword ?
+                                <Box sx={{ px: 1 }}>
+                                    <FormLabel fontSize="inherit" sx={{ fontSize: "12px", color: "red"}}>
+                                        {formik.errors.confirmPassword}
                                     </FormLabel>
                                 </Box>
                                 : null}

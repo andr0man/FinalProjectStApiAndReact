@@ -1,11 +1,11 @@
-﻿using Dashboard.DAL.ViewModels.Auth;
+﻿using DAL.ViewModels.Auth;
 using FluentValidation;
 
-namespace Dashboard.BLL.Validators
+namespace BLL.Validators
 {
     public class SignUpValidator : AbstractValidator<SignUpVM>
     {
-        public SignUpValidator() 
+        public SignUpValidator()
         {
             RuleFor(m => m.Email)
                 .EmailAddress().WithMessage("Невірний формат пошти")

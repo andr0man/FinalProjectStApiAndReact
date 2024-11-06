@@ -1,16 +1,17 @@
-using Dashboard.BLL.Middlewares;
-using Dashboard.BLL.Services.AccountService;
-using Dashboard.BLL.Services.ImageService;
-using Dashboard.BLL.Services.JwtService;
-using Dashboard.BLL.Services.MailService;
-using Dashboard.BLL.Services.RoleService;
-using Dashboard.BLL.Services.UserService;
-using Dashboard.DAL;
-using Dashboard.DAL.Data;
-using Dashboard.DAL.Data.Initializer;
-using Dashboard.DAL.Models.Identity;
-using Dashboard.DAL.Repositories.RoleRepository;
-using Dashboard.DAL.Repositories.UserRepository;
+using BLL.Middlewares;
+using BLL.Services.AccountService;
+using BLL.Services.ImageService;
+using BLL.Services.JwtService;
+using BLL.Services.MailService;
+using BLL.Services.RoleService;
+using BLL.Services.UserService;
+using DAL;
+using DAL.Data;
+using DAL.Data.Initializer;
+using DAL.Models.Identity;
+using DAL.Repositories.CategoryRepository;
+using DAL.Repositories.RoleRepository;
+using DAL.Repositories.UserRepository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -84,6 +85,7 @@ builder.Services.AddScoped<IJwtService, JwtService>();
 // Add repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 // Add automapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

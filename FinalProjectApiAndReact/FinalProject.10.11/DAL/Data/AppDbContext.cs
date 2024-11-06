@@ -1,13 +1,17 @@
-﻿using Dashboard.DAL.Models;
-using Dashboard.DAL.Models.Identity;
+﻿using DAL.Models;
+using DAL.Models.Identity;
+using DAL.Models.ToDos;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Dashboard.DAL.Data
+namespace DAL.Data
 {
     public class AppDbContext : IdentityDbContext<User, Role, string, UserClaim, UserRole, UserLogin, RoleClaim, UserToken>
     {
         public DbSet<RefreshToken> RefreshTokens { get; set; }
+        public DbSet<Category> Categories{ get; set; }
+        public DbSet<ToDo> ToDos { get; set; }
+        public DbSet<ToDoList> ToDosList { get; set; }
 
         public AppDbContext(DbContextOptions options)
             : base(options) { }

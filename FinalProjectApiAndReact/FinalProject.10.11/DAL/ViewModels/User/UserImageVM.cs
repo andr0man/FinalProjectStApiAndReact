@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace Dashboard.DAL.ViewModels.User
+namespace DAL.ViewModels.User
 {
     public class UserImageVM
     {

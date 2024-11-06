@@ -1,16 +1,16 @@
-﻿using Dashboard.BLL.Services;
-using Dashboard.BLL.Services.ImageService;
-using Dashboard.BLL.Services.UserService;
-using Dashboard.BLL.Validators;
-using Dashboard.DAL;
-using Dashboard.DAL.Models.Identity;
-using Dashboard.DAL.ViewModels.User;
+﻿using BLL.Services;
+using BLL.Services.ImageService;
+using BLL.Services.UserService;
+using DAL;
+using DAL.Models.Identity;
+using DAL.ViewModels.User;
+using BLL.Validators;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Dashboard.API.Controllers
+namespace API.Controllers
 {
     [ApiController]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]

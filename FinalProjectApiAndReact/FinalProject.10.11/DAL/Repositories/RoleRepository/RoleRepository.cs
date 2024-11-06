@@ -1,9 +1,9 @@
-﻿using Dashboard.DAL.Models.Identity;
+﻿using DAL.Models.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace Dashboard.DAL.Repositories.RoleRepository
+namespace DAL.Repositories.RoleRepository
 {
     public class RoleRepository : IRoleRepository
     {

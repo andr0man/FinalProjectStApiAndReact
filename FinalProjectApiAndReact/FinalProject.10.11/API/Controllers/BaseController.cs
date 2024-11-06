@@ -1,7 +1,7 @@
-﻿using Dashboard.BLL.Services;
+﻿using BLL.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Dashboard.API.Controllers
+namespace API.Controllers
 {
     public abstract class BaseController : ControllerBase
     {

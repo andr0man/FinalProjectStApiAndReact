@@ -1,5 +1,5 @@
-﻿using Dashboard.DAL;
-using Dashboard.DAL.ViewModels.Auth;
+﻿using DAL;
+using DAL.ViewModels.Auth;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
@@ -7,11 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dashboard.BLL.Validators
+namespace BLL.Validators
 {
-    public  class SignInValidator : AbstractValidator<SignInVM>
+    public class SignInValidator : AbstractValidator<SignInVM>
     {
-         public SignInValidator() 
+        public SignInValidator()
         {
             RuleFor(m => m.Email)
                 .EmailAddress().WithMessage("Невірний формат пошти")

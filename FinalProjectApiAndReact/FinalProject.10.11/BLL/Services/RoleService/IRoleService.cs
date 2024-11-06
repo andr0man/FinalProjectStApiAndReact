@@ -1,6 +1,7 @@
-﻿using Dashboard.DAL.ViewModels;
+﻿using BLL.Services;
+using DAL.ViewModels.Role;
 
-namespace Dashboard.BLL.Services.RoleService
+namespace BLL.Services.RoleService
 {
     public interface IRoleService
     {

@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BLL.Services;
+using Microsoft.AspNetCore.Http;
 
-namespace Dashboard.BLL.Services.ImageService
+namespace BLL.Services.ImageService
 {
     public interface IImageService
     {

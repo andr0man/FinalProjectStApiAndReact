@@ -1,8 +1,8 @@
-﻿using Dashboard.DAL;
-using Dashboard.DAL.ViewModels.User;
+﻿using DAL.ViewModels.User;
+using DAL;
 using FluentValidation;
 
-namespace Dashboard.BLL.Validators
+namespace BLL.Validators
 {
     public class CreateUserValidator : AbstractValidator<CreateUpdateUserVM>
     {

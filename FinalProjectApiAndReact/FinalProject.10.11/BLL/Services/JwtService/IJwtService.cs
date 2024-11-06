@@ -1,7 +1,7 @@
-﻿using Dashboard.DAL.Models.Identity;
-using Dashboard.DAL.ViewModels;
+﻿using DAL.Models.Identity;
+using DAL.ViewModels;
 
-namespace Dashboard.BLL.Services.JwtService
+namespace BLL.Services.JwtService
 {
     public interface IJwtService
     {

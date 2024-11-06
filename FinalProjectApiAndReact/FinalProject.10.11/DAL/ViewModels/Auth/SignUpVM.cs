@@ -1,4 +1,4 @@
-﻿namespace Dashboard.DAL.ViewModels.Auth
+﻿namespace DAL.ViewModels.Auth
 {
     public class SignUpVM
     {

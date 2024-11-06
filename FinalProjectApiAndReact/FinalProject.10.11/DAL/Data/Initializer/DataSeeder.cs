@@ -1,9 +1,13 @@
-﻿using Dashboard.DAL.Models.Identity;
+﻿using DAL;
+using DAL.Models.Identity;
+using DAL.Models.ToDos;
+using DAL.Repositories.CategoryRepository;
+using DAL.Repositories.UserRepository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Dashboard.DAL.Data.Initializer
+namespace DAL.Data.Initializer
 {
     public static class DataSeeder
     {
@@ -11,11 +15,30 @@ namespace Dashboard.DAL.Data.Initializer
         {
             using (var scope = builder.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
-                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+                var userManager = scope.ServiceProvider.GetRequiredService<IUserRepository>();
+                var categoryRep = scope.ServiceProvider.GetRequiredService<ICategoryRepository>();
                 var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<Role>>();
 
                 if (!roleManager.Roles.Any())
                 {
+                    await categoryRep.AddAsync(new Category
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Робота"
+                    });
+
+                    await categoryRep.AddAsync(new Category
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Навчання"
+                    });
+
+                    await categoryRep.AddAsync(new Category
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Особисте"
+                    });
+
                     var adminRole = new Role
                     {
                         Id = Settings.AdminRole,

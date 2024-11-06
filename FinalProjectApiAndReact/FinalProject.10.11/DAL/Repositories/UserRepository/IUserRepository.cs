@@ -1,8 +1,8 @@
-﻿using Dashboard.DAL.Models.Identity;
+﻿using DAL.Models.Identity;
 using Microsoft.AspNetCore.Identity;
 using System.Linq.Expressions;
 
-namespace Dashboard.DAL.Repositories.UserRepository
+namespace DAL.Repositories.UserRepository
 {
     public interface IUserRepository
     {

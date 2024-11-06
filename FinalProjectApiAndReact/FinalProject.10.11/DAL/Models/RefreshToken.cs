@@ -1,8 +1,8 @@
-﻿using Dashboard.DAL.Models.Identity;
+﻿using DAL.Models.Identity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Dashboard.DAL.Models
+namespace DAL.Models
 {
     public class RefreshToken
     {

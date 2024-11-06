@@ -1,6 +1,7 @@
-﻿using Dashboard.DAL.ViewModels.User;
+﻿using BLL.Services;
+using DAL.ViewModels.User;
 
-namespace Dashboard.BLL.Services.UserService
+namespace BLL.Services.UserService
 {
     public interface IUserService
     {

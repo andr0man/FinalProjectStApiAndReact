@@ -1,14 +1,15 @@
-﻿using Dashboard.BLL.Services.JwtService;
-using Dashboard.BLL.Services.MailService;
-using Dashboard.DAL;
-using Dashboard.DAL.Models.Identity;
-using Dashboard.DAL.Repositories.UserRepository;
-using Dashboard.DAL.ViewModels.Auth;
+﻿using BLL.Services;
+using BLL.Services.JwtService;
+using BLL.Services.MailService;
+using DAL;
+using DAL.Models.Identity;
+using DAL.Repositories.UserRepository;
+using DAL.ViewModels.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Text;
 
-namespace Dashboard.BLL.Services.AccountService
+namespace BLL.Services.AccountService
 {
     public class AccountService : IAccountService
     {

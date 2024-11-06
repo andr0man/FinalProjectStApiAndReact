@@ -1,4 +1,4 @@
-﻿namespace Dashboard.DAL.ViewModels
+﻿namespace DAL.ViewModels.Role
 {
     public class RoleVM
     {

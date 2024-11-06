@@ -1,5 +1,5 @@
-﻿using Dashboard.DAL;
-using Dashboard.DAL.Models.Identity;
+﻿using DAL;
+using DAL.Models.Identity;
 using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.WebUtilities;
@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using MimeKit;
 using System.Text;
 
-namespace Dashboard.BLL.Services.MailService
+namespace BLL.Services.MailService
 {
     public class MailService : IMailService
     {

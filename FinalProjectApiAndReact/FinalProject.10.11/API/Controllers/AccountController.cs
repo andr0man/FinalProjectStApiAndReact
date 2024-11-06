@@ -1,12 +1,12 @@
-﻿using Dashboard.BLL.Services;
-using Dashboard.BLL.Services.AccountService;
-using Dashboard.BLL.Services.JwtService;
-using Dashboard.BLL.Validators;
-using Dashboard.DAL.ViewModels;
-using Dashboard.DAL.ViewModels.Auth;
+﻿using BLL.Services;
+using BLL.Services.AccountService;
+using BLL.Services.JwtService;
+using BLL.Validators;
+using DAL.ViewModels;
+using DAL.ViewModels.Auth;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Dashboard.API.Controllers
+namespace API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
