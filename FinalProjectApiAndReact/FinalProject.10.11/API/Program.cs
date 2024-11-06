@@ -1,9 +1,11 @@
 using BLL.Middlewares;
 using BLL.Services.AccountService;
+using BLL.Services.CategoryService;
 using BLL.Services.ImageService;
 using BLL.Services.JwtService;
 using BLL.Services.MailService;
 using BLL.Services.RoleService;
+using BLL.Services.ToDoListService;
 using BLL.Services.UserService;
 using DAL;
 using DAL.Data;
@@ -83,6 +85,8 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<IToDoListService, ToDoListService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 // Add repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();

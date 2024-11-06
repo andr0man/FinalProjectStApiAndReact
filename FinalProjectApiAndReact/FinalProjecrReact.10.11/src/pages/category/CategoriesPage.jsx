@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Grid, Box, Modal } from "@mui/material";
@@ -24,22 +25,23 @@ const style = {
     pb: 3,
 };
 
-const RolesPage = () => {
-    const [roleModal, setRoleModal] = React.useState(null);
+const CategoriesPage = () => {
+    debugger;
+    const [categoryModal, setCategoryModal] = React.useState(null);
 
     const handleOpen = (role) => {
-        setRoleModal(role);
+        setCategoryModal(role);
     };
     const handleClose = () => {
-        setRoleModal(null);
+        setCategoryModal(null);
     };
 
-    const { roles } = useSelector((store) => store.user);
-    const { loadRoles, deleteRole } = useAction();
+    const { categories } = useSelector((store) => store.toDos);
+    const { loadCategories, deleteCategory } = useAction();
 
     const deleteHandler = async () => {
-        if (roleModal != null) {
-            const response = await deleteRole(roleModal.id);
+        if (categoryModal != null) {
+            const response = await deleteCategory(categoryModal.id);
             if (response.success) {
                 toast.success(response.message);
             }
@@ -48,21 +50,21 @@ const RolesPage = () => {
     };
 
     useEffect(() => {
-        loadRoles();
+        loadCategories();
     }, []);
 
     return (
         <Box sx={{ px: 4 }}>
             <Box sx={{ textAlign: "right" }}>
-                <Link to="newrole">
+                <Link to="newcategory">
                     <Button color="success" variant="contained">
                         New role
                     </Button>
                 </Link>
             </Box>
             <Grid container sx={{ mt: 3 }} direction="row" alignItems="center">
-                {roles.map((role) => (
-                        <Grid item xs={4} sx={{ p: 2 }} key={role.id}>
+                {categories.map((category) => (
+                        <Grid item xs={4} sx={{ p: 2 }} key={category.id}>
                             <Card>
                                 <CardContent>
                                     <Typography
@@ -70,17 +72,17 @@ const RolesPage = () => {
                                         variant="h5"
                                         component="div"
                                     >
-                                        {role.name}
+                                        {category.name}
                                     </Typography>
                                     <Typography
                                         variant="body2"
                                         sx={{ color: "text.secondary" }}
                                     >
-                                        {"Id: " + role.id}
+                                        {"Id: " + category.id}
                                     </Typography>
                                 </CardContent>
                                 <CardActions>
-                                    <Link to={"newrole/" + role.id}>
+                                    <Link to={"newcategory/" + category.id}>
                                     <Button
                                         color="success"
                                         variant="contained"
@@ -92,7 +94,7 @@ const RolesPage = () => {
                                     <Button
                                         variant="contained"
                                         size="small"
-                                        onClick={() => handleOpen(role)}
+                                        onClick={() => handleOpen(category)}
                                     >
                                         Delete
                                     </Button>
@@ -102,7 +104,7 @@ const RolesPage = () => {
                 ))}
                 <div>
                     <Modal
-                        open={roleModal != null}
+                        open={categoryModal != null}
                         onClose={handleClose}
                         aria-labelledby="parent-modal-title"
                         aria-describedby="parent-modal-description"
@@ -112,14 +114,14 @@ const RolesPage = () => {
                                 style={{ textAlign: "center" }}
                                 id="parent-modal-title"
                             >
-                                Delete role
+                                Delete category
                             </h2>
                             <p
                                 style={{ textAlign: "center" }}
                                 id="parent-modal-description"
                             >
-                                Are you sure you want to delete the role '
-                                {roleModal?.name}'?
+                                Are you sure you want to delete the category '
+                                {categoryModal?.name}'?
                             </p>
                             <Box
                                 sx={{
@@ -149,4 +151,4 @@ const RolesPage = () => {
     );
 };
 
-export default RolesPage;
+export default CategoriesPage;

@@ -21,7 +21,8 @@ const logo = "Final Projec React";
 
 const adminPages = [
     { title: "Користувачі", path: "/users" },
-    { title: "Ролі", path: "/roles" }
+    { title: "Ролі", path: "/roles" },
+    { title: "Категорії", path: "/categories" }
 ];
 
 const Navbar = () => {
@@ -56,9 +57,6 @@ const Navbar = () => {
         <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <NewspaperIcon
-                        sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-                    />
                     <Typography
                         variant="h6"
                         noWrap
@@ -128,9 +126,6 @@ const Navbar = () => {
                                 ))}
                         </Menu>
                     </Box>
-                    <NewspaperIcon
-                        sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-                    />
                     <Typography
                         variant="h5"
                         noWrap

@@ -28,7 +28,6 @@ export const updateUser = (user) => async (dispatch) => {
         if(token == null) {
             return;
         }
-        console.log(user);
 
         const response = await http.put("user", user, {
             headers: {

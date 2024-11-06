@@ -8,11 +8,7 @@ namespace BLL.MappingProfiles
     {
         public RoleMapperProfile()
         {
-            // Role -> RoleVM
-            CreateMap<Role, RoleVM>();
-
-            // RoleVM -> Role
-            CreateMap<RoleVM, Role>();
+            CreateMap<Role, RoleVM>().ReverseMap();
         }
     }
 }

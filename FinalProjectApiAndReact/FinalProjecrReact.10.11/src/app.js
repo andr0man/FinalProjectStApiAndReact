@@ -11,6 +11,8 @@ import UsersPage from "./pages/users/UsersPage";
 import RolesPage from "./pages/roles/RolesPage";
 import NewRolePage from "./pages/roles/NewRolePage";
 import UpdateUserPage from "./pages/users/UpdateUserPage";
+import CategoriesPage from "./pages/category/CategoriesPage";
+import NewCategoryPage from "./pages/category/NewCategoryPage";
 
 const App = () => {
     const { isAuth, role } = useSelector((store) => store.auth);
@@ -40,6 +42,12 @@ const App = () => {
                             <Route index element={<RolesPage />} />
                             <Route path="newrole/:roleid" element={<NewRolePage />} />
                             <Route path="newrole" element={<NewRolePage />} />
+                        </Route>
+
+                        <Route path="categories">
+                            <Route index element={<CategoriesPage />} />
+                            <Route path="newcategory/:categoryid" element={<NewCategoryPage />} />
+                            <Route path="newcategory" element={<NewCategoryPage />} />
                         </Route>
                     </>
                 )}
