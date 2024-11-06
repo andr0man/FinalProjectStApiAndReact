@@ -1,4 +1,5 @@
-﻿using DAL.Models.ToDos;
+﻿using DAL.Data;
+using DAL.Models.ToDos;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -6,9 +7,9 @@ namespace DAL.Repositories.ToDoRepository
 {
     public class ToDoRepository : IToDoRepository
     {
-        private readonly ApplicationDbContext _context;
+        private readonly AppDbContext _context;
 
-        public ToDoRepository(ApplicationDbContext context)
+        public ToDoRepository(AppDbContext context)
         {
             _context = context;
         }

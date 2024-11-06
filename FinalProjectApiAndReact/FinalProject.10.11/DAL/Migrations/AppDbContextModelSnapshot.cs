@@ -425,7 +425,7 @@ namespace DAL.Migrations
             modelBuilder.Entity("DAL.Models.ToDos.ToDoList", b =>
                 {
                     b.HasOne("DAL.Models.ToDos.Category", "Category")
-                        .WithMany("ToDoLists")
+                        .WithMany("ToDosList")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -461,7 +461,7 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Models.ToDos.Category", b =>
                 {
-                    b.Navigation("ToDoLists");
+                    b.Navigation("ToDosList");
                 });
 
             modelBuilder.Entity("DAL.Models.ToDos.ToDoList", b =>
