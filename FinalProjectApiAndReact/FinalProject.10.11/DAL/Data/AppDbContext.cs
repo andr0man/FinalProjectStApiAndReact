@@ -61,6 +61,15 @@ namespace DAL.Data
                     .HasForeignKey(rc => rc.RoleId)
                     .IsRequired();
             });
+
+            builder.Entity<ToDoList>(td =>
+            {
+                td.HasMany(t => t.ToDos)
+                .WithOne(t => t.ToDoList)
+                .HasForeignKey(t=> t.ToDoListId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
+            });
         }
     }
 }

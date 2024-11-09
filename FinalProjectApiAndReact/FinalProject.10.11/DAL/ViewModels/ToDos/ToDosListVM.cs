@@ -7,6 +7,7 @@
         public int Priority { get; set; }
         public string CategoryName { get; set; }
         public string UserName { get; set; }
+        public List<ToDoVM> ToDos { get; set; }
     }
 
     public class CreateUpdateToDoListVM

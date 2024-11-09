@@ -1,14 +1,14 @@
 import { toast } from "react-toastify";
 import http from "../../../http_common";
 
-export const loadToDos = (toDosListId) => async (dispatch) => {
+export const loadToDosList = (userId) => async (dispatch) => {
   try {
     const token = localStorage.getItem("auth");
     if (token == null) {
       return;
     }
 
-    const response = await http.get(`ToDo?toDoListId=${toDosListId}`, {
+    const response = await http.get(`ToDosList?userId=${userId}`, {
       headers: {
         Authorization: "Bearer " + token,
       },
@@ -16,7 +16,7 @@ export const loadToDos = (toDosListId) => async (dispatch) => {
     const { data } = response;
 
     dispatch({
-      type: "LOAD_TODOS",
+      type: "LOAD_TODOLIST",
       payload: data.payload,
     });
   } catch (error) {
@@ -24,16 +24,39 @@ export const loadToDos = (toDosListId) => async (dispatch) => {
   }
 };
 
-export const createToDo = (newToDo) => async (dispatch) => {
+export const loadOneToDosList = (toDosListId) => async (dispatch) => {
   try {
-    console.log(newToDo);
+    const token = localStorage.getItem("auth");
+    if (token == null) {
+      return;
+    }
+
+    const response = await http.get(`ToDosList/${toDosListId}`, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+    const { data } = response;
+
+    dispatch({
+      type: "LOAD_ONETODOLIST",
+      payload: data.payload,
+    });
+  } catch (error) {
+    toast.error(error.message);
+  }
+};
+
+export const createToDosList = (newToDosList) => async (dispatch) => {
+  try {
+    console.log(newToDosList);
 
     const token = localStorage.getItem("auth");
     if (token == null) {
       return;
     }
 
-    const response = await http.post("ToDo", newToDo, {
+    const response = await http.post("ToDosList", newToDosList, {
       headers: {
         Authorization: "Bearer " + token,
       },
@@ -42,7 +65,7 @@ export const createToDo = (newToDo) => async (dispatch) => {
 
     if (data === undefined) {
       const responseData = response.response.data;
-      if (responseData.statusCode != 200) {
+      if (responseData.statusCode !== 200) {
         return { success: false, message: responseData.message };
       }
     }
@@ -53,25 +76,23 @@ export const createToDo = (newToDo) => async (dispatch) => {
   }
 };
 
-export const toggleToDo = (toDoid) => async (dispatch) => {
+export const updateToDosList = (toDoList) => async (dispatch) => {
   try {
     const token = localStorage.getItem("auth");
     if (token == null) {
       return;
     }
 
-    const response = await http.put(`ToDo/Toggle/${toDoid}`, {
+    const response = await http.put("ToDosList", toDoList, {
       headers: {
         Authorization: "Bearer " + token,
       },
     });
     const { data } = response;
 
-    console.log(data);
-
     if (data === undefined) {
       const responseData = response.response.data;
-      if (responseData.statusCode != 200) {
+      if (responseData.statusCode !== 200) {
         return { success: false, message: responseData.message };
       }
     }
@@ -82,41 +103,14 @@ export const toggleToDo = (toDoid) => async (dispatch) => {
   }
 };
 
-export const updateToDo = (toDo) => async (dispatch) => {
+export const deleteToDosList = (id) => async (dispatch) => {
   try {
     const token = localStorage.getItem("auth");
     if (token == null) {
       return;
     }
 
-    const response = await http.put("ToDo", toDo, {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    });
-    const { data } = response;
-
-    if (data === undefined) {
-      const responseData = response.response.data;
-      if (responseData.statusCode != 200) {
-        return { success: false, message: responseData.message };
-      }
-    }
-
-    return { success: true, message: data.message };
-  } catch (error) {
-    return { success: false, message: error.response.data.message };
-  }
-};
-
-export const deleteToDo = (id) => async (dispatch) => {
-  try {
-    const token = localStorage.getItem("auth");
-    if (token == null) {
-      return;
-    }
-
-    const response = await http.delete(`ToDo/${id}`, {
+    const response = await http.delete(`ToDosList/${id}`, {
       headers: {
         Authorization: "Bearer " + token,
       },
@@ -126,12 +120,12 @@ export const deleteToDo = (id) => async (dispatch) => {
 
     if (data === undefined) {
       const responseData = response.response.data;
-      if (responseData.statusCode != 200) {
+      if (responseData.statusCode !== 200) {
         return { success: false, message: responseData.message };
       }
     }
 
-    dispatch({ type: "DELETE_TODOS", payload: id });
+    dispatch({ type: "DELETE_TODOLIST", payload: id });
 
     return { success: true, message: data.message };
   } catch (error) {

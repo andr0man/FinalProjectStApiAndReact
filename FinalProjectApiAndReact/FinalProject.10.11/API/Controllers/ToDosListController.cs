@@ -54,14 +54,9 @@ namespace API.Controllers
             return GetResult(response);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateToDoListAsync(Guid id, [FromBody] CreateUpdateToDoListVM model)
+        [HttpPut]
+        public async Task<IActionResult> UpdateToDoListAsync([FromBody] CreateUpdateToDoListVM model)
         {
-            if (id != model.Id)
-            {
-                return GetResult(ServiceResponse.BadRequestResponse("ID mismatch"));
-            }
-
             var response = await _toDoListService.UpdateAsync(model);
             return GetResult(response);
         }

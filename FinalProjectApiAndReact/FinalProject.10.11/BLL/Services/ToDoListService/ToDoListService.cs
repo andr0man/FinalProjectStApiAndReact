@@ -40,7 +40,9 @@ namespace BLL.Services.ToDoListService
             toDoList = _mapper.Map(model, toDoList);
             await _toDoListRepository.UpdateAsync(toDoList);
 
-            return ServiceResponse.OkResponse("Список завдань успішно оновлено", toDoList);
+            var toDoListShow = _mapper.Map<ToDoListVM>(toDoList);
+
+            return ServiceResponse.OkResponse("Список завдань успішно оновлено", toDoListShow);
         }
 
         public async Task<ServiceResponse> DeleteAsync(Guid id)

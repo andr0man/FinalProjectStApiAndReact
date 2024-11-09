@@ -43,7 +43,6 @@ export const signIn = (model) => async (dispatch) => {
 
 export const signUp = (model) => async (dispatch) => {
     try {        
-        console.log(model);
         const response = await http.post("account/signup", model);      
         const { data } = response;
         const tokens = data.payload;

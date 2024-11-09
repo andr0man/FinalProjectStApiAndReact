@@ -15,119 +15,112 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 
 const NewCategoryPage = () => {
-    const navigate = useNavigate();
-    const { createCategory, updateCategory } = useAction();
-    const { categories } = useSelector((store) => store.toDos);
+  const navigate = useNavigate();
+  const { createCategory, updateCategory } = useAction();
+  const { categories } = useSelector((store) => store.toDos);
 
-    const { categoryid } = useParams();
+  const { categoryid } = useParams();
 
-    useEffect(() => {
-        console.log(categories.length)
-        if(categories.length == 0) {
-            navigate("/categories");
-        }
-    }, [])
+  useEffect(() => {
+    if (categories.length == 0) {
+      navigate("/categories");
+    }
+  }, []);
 
-    const handleSubmit = async (values) => {
-        let response = null;
+  const handleSubmit = async (values) => {
+    let response = null;
 
-        if (categoryid != undefined) {
-            response = await updateCategory({ ...values, id: categoryid });
-        } else {
-            response = await createCategory(values);
-        }
-        
+    if (categoryid !== undefined) {
+      response = await updateCategory({ ...values, id: categoryid });
+    } else {
+      response = await createCategory(values);
+    }
 
-        if (!response.success) {
-            toast.error(response.message);
-        } else {
-            toast.success(response.message);
-            navigate("/categories");
-        }
-    };
+    if (!response.success) {
+      toast.error(response.message);
+    } else {
+      toast.success(response.message);
+      navigate("/categories");
+    }
+  };
 
-    const validateYupSchema = Yup.object({
-        name: Yup.string().required("Обов'язкове поле"),
-    });
+  const validateYupSchema = Yup.object({
+    name: Yup.string().required("Обов'язкове поле"),
+  });
 
-    const formik = useFormik({
-        initialValues: {
-            name:
-                categoryid != undefined
-                    ? categories.find((c) => c.id == categoryid)?.name
-                    : "",
-        },
-        validationSchema: validateYupSchema,
-        onSubmit: handleSubmit,
-    });
+  const formik = useFormik({
+    initialValues: {
+      name:
+        categoryid !== undefined
+          ? categories.find((c) => c.id == categoryid)?.name
+          : "",
+    },
+    validationSchema: validateYupSchema,
+    onSubmit: handleSubmit,
+  });
 
-    return (
-        <>
-            <Container component="main" maxWidth="xs">
-                <Box
-                    sx={{
-                        marginTop: 8,
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                    }}
+  return (
+    <>
+      <Container component="main" maxWidth="xs">
+        <Box
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Avatar sx={{ m: 1 }}>
+            <AccessibilityIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            {categoryid !== undefined ? "Edit category" : "New category"}
+          </Typography>
+          <Box
+            component="form"
+            onSubmit={formik.handleSubmit}
+            noValidate
+            sx={{ mt: 1 }}
+          >
+            <TextField
+              margin="normal"
+              fullWidth
+              id="name"
+              label="name"
+              name="name"
+              autoFocus
+              onChange={formik.handleChange}
+              value={formik.values.name}
+              onBlur={formik.handleBlur}
+            />
+            {formik.touched.name && formik.errors.name ? (
+              <Box sx={{ px: 1 }}>
+                <FormLabel
+                  fontSize="inherit"
+                  sx={{ fontSize: "12px", color: "red" }}
                 >
-                    <Avatar sx={{ m: 1 }}>
-                        <AccessibilityIcon />
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        {categoryid != undefined ? "Edit category" : "New category"}
-                    </Typography>
-                    <Box
-                        component="form"
-                        onSubmit={formik.handleSubmit}
-                        noValidate
-                        sx={{ mt: 1 }}
-                    >
-                        <TextField
-                            margin="normal"
-                            fullWidth
-                            id="name"
-                            label="name"
-                            name="name"
-                            autoFocus
-                            onChange={formik.handleChange}
-                            value={formik.values.name}
-                            onBlur={formik.handleBlur}
-                        />
-                        {formik.touched.name && formik.errors.name ? (
-                            <Box sx={{ px: 1 }}>
-                                <FormLabel
-                                    fontSize="inherit"
-                                    sx={{ fontSize: "12px", color: "red" }}
-                                >
-                                    {formik.errors.name}
-                                </FormLabel>
-                            </Box>
-                        ) : null}
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            sx={{ mt: 3 }}
-                        >
-                            {categoryid != undefined ? "Save" : "Create"}
-                        </Button>
-                        <Link to="/categories">
-                            <Button
-                                fullWidth
-                                color="secondary"
-                                variant="contained"
-                                sx={{ mt: 2 }}
-                            >
-                                Back
-                            </Button>
-                        </Link>
-                    </Box>
-                </Box>
-            </Container>
-        </>
-    );
+                  {formik.errors.name}
+                </FormLabel>
+              </Box>
+            ) : null}
+            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3 }}>
+              {categoryid !== undefined ? "Save" : "Create"}
+            </Button>
+            <Link to="/categories">
+              <Button
+                fullWidth
+                color="secondary"
+                variant="contained"
+                sx={{ mt: 2 }}
+              >
+                Back
+              </Button>
+            </Link>
+          </Box>
+        </Box>
+      </Container>
+    </>
+  );
 };
 
 export default NewCategoryPage;

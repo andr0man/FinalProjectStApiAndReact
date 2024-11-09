@@ -9,7 +9,7 @@ namespace DAL.Repositories.ToDoRepository
         Task<ToDo?> GetByIdAsync(Guid id);
         Task<List<ToDo>> GetAllAsync();
         Task AddAsync(ToDo model);
-        Task UpdateAsync(ToDo model);
+        Task UpdateAsync(ToDo model, CancellationToken cancellation);
         Task DeleteAsync(ToDo model);
         Task<List<ToDo>> GetByToDoListIdAsync(Guid toDoListId);
     }

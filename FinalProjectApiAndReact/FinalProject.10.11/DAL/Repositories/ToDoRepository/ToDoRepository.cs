@@ -55,10 +55,10 @@ namespace DAL.Repositories.ToDoRepository
                 .ToListAsync();
         }
 
-        public async Task UpdateAsync(ToDo model)
+        public async Task UpdateAsync(ToDo model, CancellationToken cancellation)
         {
             _context.ToDos.Update(model);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(cancellation);
         }
     }
 }
