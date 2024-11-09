@@ -17,8 +17,15 @@ import {
   Select,
   MenuItem,
   InputLabel,
+  TableSortLabel,
   FormControl,
+  Toolbar,
+  Paper,
+  TablePagination,
+  Switch,
+  FormControlLabel
 } from "@mui/material";
+import { visuallyHidden } from "@mui/utils";
 import { Link } from "react-router-dom";
 
 const MyToDosPage = () => {
@@ -36,6 +43,11 @@ const MyToDosPage = () => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [currentToDosList, setCurrentToDosList] = useState(null);
   const [toDosListToDelete, setToDosListToDelete] = useState(null);
+  const [order, setOrder] = useState("asc");
+  const [orderBy, setOrderBy] = useState("name");
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [dense, setDense] = useState(false);
 
   useEffect(() => {
     if (user?.id) {
@@ -87,62 +99,162 @@ const MyToDosPage = () => {
     setCurrentToDosList((prev) => ({ ...prev, [name]: value }));
   };
 
-  return (
-    <TableContainer>
-      <Button
-        onClick={() => handleAddOrEditToDosList({userId: user.id})}
-        color="primary"
-        variant="contained"
-        sx={{ mb: 2 }}
-      >
-        Add ToDosList
-      </Button>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell>Priority</TableCell>
-            <TableCell>Category Name</TableCell>
-            <TableCell>Actions</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {toDosList.map((list) => (
-            <TableRow key={list.id}>
-              <TableCell>{list.name}</TableCell>
-              <TableCell>{list.priority}</TableCell>
-              <TableCell>{list.categoryName}</TableCell>
-              <TableCell>
-                <Button
-                  onClick={() =>
-                    handleAddOrEditToDosList({
-                      id: list.id,
-                      name: list.name,
-                      priority: list.priority,
-                      categoryId: categories.find(
-                        (c) => c.name === list.categoryName
-                      ).id,
-                      userId: user.id,
-                    })
-                  }
-                  color="success"
-                >
-                  Edit
-                </Button>
-                <Button onClick={() => confirmDelete(list)} color="error">
-                  Delete
-                </Button>
-                <Link to={"ToDosList/" + list.id}>
-                  <Button color="info">
-                    Go to ToDos List
-                  </Button>
-                </Link>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+  const handleRequestSort = (event, property) => {
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
+    setOrderBy(property);
+    console.log(visibleRows);
+  };
 
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  const handleChangeDense = (event) => {
+    setDense(event.target.checked);
+  };
+
+  const visibleRows = toDosList
+    .slice()
+    .sort((a, b) => {
+      if (orderBy === "name") {
+        return (a.name < b.name ? -1 : 1) * (order === "asc" ? 1 : -1);
+      } else if (orderBy === "priority") {
+        return (a.priority - b.priority) * (order === "asc" ? 1 : -1);
+      } else if (orderBy === "category") {
+        return (a.categoryName - b.categoryName) * (order === "asc" ? 1 : -1);
+      }
+      return 0;
+    })
+    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+
+  const EnhancedTableHead = () => (
+    <TableHead>
+      <TableRow>
+        <TableCell align="center">
+          <TableSortLabel
+            active={orderBy === "name"}
+            direction={orderBy === "name" ? order : "asc"}
+            onClick={(event) => handleRequestSort(event, "name")}
+          >
+            Name
+            {orderBy === "name" ? (
+              <Box component="span" sx={visuallyHidden}>
+                {order === "desc" ? "sorted descending" : "sorted ascending"}
+              </Box>
+            ) : null}
+          </TableSortLabel>
+        </TableCell>
+        <TableCell align="center">
+          <TableSortLabel
+            active={orderBy === "priority"}
+            direction={orderBy === "priority" ? order : "asc"}
+            onClick={(event) => handleRequestSort(event, "priority")}
+          >
+            Priority
+            {orderBy === "priority" ? (
+              <Box component="span" sx={visuallyHidden}>
+                {order === "desc" ? "sorted descending" : "sorted ascending"}
+              </Box>
+            ) : null}
+          </TableSortLabel>
+        </TableCell>
+        <TableCell align="center">
+          <TableSortLabel
+            active={orderBy === "category"}
+            direction={orderBy === "category" ? order : "asc"}
+            onClick={(event) => handleRequestSort(event, "category")}
+          >
+            Category
+            {orderBy === "category" ? (
+              <Box component="span" sx={visuallyHidden}>
+                {order === "desc" ? "sorted descending" : "sorted ascending"}
+              </Box>
+            ) : null}
+          </TableSortLabel>
+        </TableCell>
+        <TableCell align="center">Actions</TableCell>
+      </TableRow>
+    </TableHead>
+  );
+
+  const EnhancedTableToolbar = () => (
+    <Toolbar sx={{ pl: { sm: 2 }, pr: { xs: 1, sm: 1 } }}>
+      <Typography sx={{ flex: "1 1 20%" }} variant="h5" component="div">
+        <Button
+          onClick={() => handleAddOrEditToDosList({ userId: user.id })}
+          color="primary"
+          variant="contained"
+          sx={{ mb: 2 }}
+        >
+          Add ToDosList
+        </Button>
+      </Typography>
+    </Toolbar>
+  );
+  return (
+    <Box sx={{ width: "100%" }}>
+      <Paper sx={{ width: "100%", mb: 2 }}>
+        <EnhancedTableToolbar />
+        <TableContainer>
+          <Table sx={{ minWidth: 750 }} size={dense ? "small" : "medium"}>
+            <EnhancedTableHead />
+            <TableBody>
+              {visibleRows.map((list) => (
+                <TableRow key={list.id}>
+                  <TableCell component="th" scope="row" align="center">
+                    {list.name}
+                  </TableCell>
+                  <TableCell align="center">{list.priority}</TableCell>
+                  <TableCell align="center">{list.categoryName}</TableCell>
+                  <TableCell align="center">
+                    <Button
+                      onClick={() =>
+                        handleAddOrEditToDosList({
+                          id: list.id,
+                          name: list.name,
+                          priority: list.priority,
+                          categoryId: categories.find(
+                            (c) => c.name === list.categoryName
+                          ).id,
+                          userId: user.id,
+                        })
+                      }
+                      color="success"
+                    >
+                      Edit
+                    </Button>
+                    <Button onClick={() => confirmDelete(list)} color="error">
+                      Delete
+                    </Button>
+                    <Link to={"ToDosList/" + list.id}>
+                      <Button color="info">Go to ToDos List</Button>
+                    </Link>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component="div"
+          count={toDosList.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </Paper>
+      <FormControlLabel
+        control={<Switch checked={dense} onChange={handleChangeDense} />}
+        label="Dense padding"
+      />
       {/* Modal for Adding/Editing ToDosList */}
       <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
         <Box
@@ -262,7 +374,7 @@ const MyToDosPage = () => {
           </Box>
         </Box>
       </Modal>
-    </TableContainer>
+    </Box>
   );
 };
 

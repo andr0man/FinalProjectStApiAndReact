@@ -12,11 +12,9 @@ import {
   Typography,
   TextField,
   Checkbox,
-  IconButton,
   Paper,
   TablePagination,
   Toolbar,
-  Tooltip,
   TableSortLabel,
   FormControlLabel,
   Switch,
@@ -125,7 +123,6 @@ const ToDoList = () => {
     const date = dayjs.utc(dateString).local();
     return date.format("DD.MM.YYYY");
   };
-  
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
